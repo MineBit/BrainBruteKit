@@ -433,6 +433,9 @@ def StartBrutforse():
         line_print()
         print('[0] - POP Брутфорс')
         print('[1] - FTP Брутфорс')
+        print('[2] - Gmail Брутфорс')
+        print('[3] - IMAP Брутфорс')
+        print()
 
 
 def StartCheck():
