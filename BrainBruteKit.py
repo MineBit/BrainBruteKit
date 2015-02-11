@@ -6,6 +6,7 @@ import sys
 import time
 import string
 
+from BrainBrutekit.mod import popbrute
 # Список TODO:
 # 1. Добавить пробел после символов ">>" приведя к виду ">> " в функциях ввода информации с консоли
 
@@ -403,21 +404,20 @@ def StartGenerate():
                     break
                 else:
                     print('Ошибка ввода!')
+        elif input_int == 2:
+            start_time = time.time()
+            DicGenerate(IDs, min_symb, max_symb, f_name, pass_amount)
+            finish_time = time.time()
+            line_print()
+            print('Работа модуля "Генератор Словарей" завершена!')
+            print('Время выполнения: ', str(finish_time - start_time), ' сек')
+            line_print()
         elif input_int == 777:
             print('Выход из модуля "Генератор Словарей"...')
             break
 
         else:
             print('Ошибка ввода!')
-        start_time = time.time()
-        DicGenerate(IDs, min_symb, max_symb, f_name, pass_amount)
-        finish_time = time.time()
-        line_print()
-        print('Работа модуля "Генератор Словарей" завершена!')
-        print('Время выполнения: ', str(finish_time - start_time), ' сек')
-        line_print()
-
-
 #Конец функции для старта генератора
 
 
@@ -425,9 +425,6 @@ def StartBrutforse():
     line_print()
     print('Запущен модуль "Брутфорс" | Версия модуля: 0.2')
     line_print()
-    server_in = None
-    userlist_in = None
-    wordlist_in = None
     while True:
         print('Меню модуля "Брутфорс":')
         line_print()
@@ -435,11 +432,92 @@ def StartBrutforse():
         print('[1] - FTP Брутфорс')
         print('[2] - Gmail Брутфорс')
         print('[3] - IMAP Брутфорс')
-        print()
+        print('[4] - MySQL Брутфорс')
+        print('[5] - NNTP Брутфорс')
+        print('[6] - SMTP Брутфорс')
+        print('[7] - SSH Брутфорс')
+        print('[8] - Telnet Брутфорс')
+        print('[777] - Выход')
+        line_print()
+        read_line = int(input('>> '))
+        line_print()
+        if read_line == 0:
+            while True:
+                server_in = None
+                userlist_in = None
+                wordlist_in = None
+                print('Модуль "POP Брутфорс" | Версия модуля: 0.2 ')
+                line_print()
+                print('Меню модуля "POP Брутфорс":')
+                line_print()
+                print('[0] - Просмотреть значения')
+                print('[1] - Изменить значения')
+                print('[2] - Запустить модуль')
+                print('[777] - Выйти из модуля')
+                line_print()
+                read_line = int(input('>> '))
+                line_print()
+                if read_line == 0:
+                    print('Значения:')
+                    print('[0] - Адрес сервера : ',server_in)
+                    print('[1] - Файл с логинами: ',userlist_in)
+                    print(('[2] - Файл с словарем: ',wordlist_in))
+                elif read_line == 1:
+                    while True:
+                        print('Изменить значения:')
+                        print('[0] - Адрес сервера | Текущее значение: ',server_in)
+                        print('[1] - Файл с логинами | Текущее значение: ',userlist_in)
+                        print(('[2] - Файл с словарем | Текущее значение: ',wordlist_in))
+                        print('[777] - Выход')
+                        read_line = int(input('>> '))
+                        if read_line == 0:
+                            line_print()
+                            print('Введите новое значение "Адрес сервера":')
+                            server_in = input('>> ')
+                            line_print()
+                        elif read_line == 1:
+                            line_print()
+                            print('Введите новое значение "Файл с логинами":')
+                            userlist_in = input('>> ')
+                            line_print()
+                        elif read_line == 2:
+                            line_print()
+                            print('Введите новое значение "Файл с словарем":')
+                            wordlist_in = input('>> ')
+                            line_print()
+                        elif read_line == 777:
+                            break
+                        else:
+                            line_print()
+                            print('Ошибка! Введено неверное значение!')
+                elif read_line == 2:
+                    print('Проверка значений...')
+                    if server_in != None | userlist_in != None | wordlist_in != None:
+                        print('Значения не равны нулю...')
+                        print('Запуск модуля...')
+                        start_time = time.time()
+                        popbrute.Strart(server_in,userlist_in,wordlist_in)
+                        finish_time = time.time()
+                        line_print()
+                        print('Работа модуля "POP Брутфорс" завершена!')
+                        print('Время выполнения: ', str(finish_time - start_time), ' сек')
+                        line_print()
+                    else:
+                        line_print()
+                        print('Значения пусты!')
+                        line_print()
+                elif read_line == 777:
+                    print('Выход из модуля "POP Брутфорс"...')
+                    line_print()
+                    break
+                else:
+                    print('Ошибка! Введено неверное значение!')
+                    line_print()
+
 
 
 def StartCheck():
-    pass
+    pass0
 
 
 def Help():
