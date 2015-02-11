@@ -7,6 +7,8 @@ import time
 import string
 
 from BrainBrutekit.mod import popbrute
+
+
 # Список TODO:
 # 1. Добавить пробел после символов ">>" приведя к виду ">> " в функциях ввода информации с консоли
 
@@ -513,6 +515,9 @@ def StartBrutforse():
                 else:
                     print('Ошибка! Введено неверное значение!')
                     line_print()
+        if read_line == 1:
+            while True:
+                pass
 
 
 
