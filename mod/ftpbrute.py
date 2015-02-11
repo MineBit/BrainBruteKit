@@ -14,7 +14,7 @@ from copy import copy
 
 
 # "Usage: ./ftpbrute.py <server> <userlist> <wordlist>"
-#    sys.exit(1)
+# sys.exit(1)
 
 def Start(server, userlist, wordlist):
     try:
