@@ -29,11 +29,6 @@ def Start(server, userlist, wordlist):
     except (poplib.error_proto):
         welcome = "No Response"
         pass
-
-    print
-    "\n\t   d3hydr8[at]gmail[dot]com popBruteForcer v1.0"
-    print
-    "\t--------------------------------------------------\n"
     print
     "[+] Server:", server
     print
