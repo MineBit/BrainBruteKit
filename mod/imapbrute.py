@@ -87,11 +87,9 @@ class Worker(threading.Thread):
             M.logout()
             work.join()
             sys.exit(2)
-        except(IMAP4.error, socket.gaierror, socket.error, socket.herror), msg:
-            print
-            "An error occurred:", msg
+        except(IMAP4.error, socket.gaierror, socket.error, socket.herror) as msg:
+            print('An error occurred: ', msg)
             pass
-
 
 for i in range(len(words) * len(users)):
     work = Worker()
