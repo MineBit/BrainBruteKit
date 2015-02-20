@@ -1,7 +1,9 @@
-#!usr/bin/python
-# Telnet Brute Forcer
-#http://www.darkc0de.com
-#d3hydr8[at]gmail[dot]com
+# -*- coding: utf-8 -*-
+# Coded by Mine_Bit[BrainHands]
+# brainhands.ru
+# mine_bit@brainhands.ru
+
+#TODO не реализованно
 
 import threading
 import time

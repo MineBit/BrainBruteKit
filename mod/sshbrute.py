@@ -1,9 +1,9 @@
-#!/usr/bin/python
-# SSH BruteForcer
+# -*- coding: utf-8 -*-
+# Coded by Mine_Bit[BrainHands]
+# brainhands.ru
+# mine_bit@brainhands.ru
 
-#http://www.darkc0de.com
-#d3hydr8[at]gmail[dot]com
-
+#TODO не реализованно
 import sys
 import time
 
@@ -31,7 +31,7 @@ def brute(word):
         print
         "\t[!] Login Success:", user, word, "\n"
         sys.exit(1)
-    except Exception, e:
+    except Exception as e:
         #print "[-] Failed"
         pass
     except KeyboardInterrupt:

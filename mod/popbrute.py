@@ -1,7 +1,7 @@
-#!usr/bin/python
-# Pop3 Brute Forcer
-# http://www.darkc0de.com
-# d3hydr8[at]gmail[dot]com
+# -*- coding: utf-8 -*-
+# Coded by Mine_Bit[BrainHands]
+# brainhands.ru
+# mine_bit@brainhands.ru
 
 import threading
 import time

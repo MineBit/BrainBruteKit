@@ -1,15 +1,7 @@
-#!usr/bin/python
-# Gmail Brute Forcer
-# To use this script you need ClientCookie and Client Form.
-# http://wwwsearch.sourceforge.net/ClientCookie/src/ClientCookie-1.0.3.tar.gz
-# http://wwwsearch.sourceforge.net/ClientForm/src/ClientForm-0.1.17.tar.gz
-#To install the package, run the following command:
-#python setup.py build
-#then (with appropriate permissions)
-#python setup.py install
-
-#http://www.darkc0de.com
-#d3hydr8[at]gmail[dot]com
+# -*- coding: utf-8 -*-
+# Coded by Mine_Bit[BrainHands]
+# brainhands.ru
+# mine_bit@brainhands.ru
 
 import threading
 import time

@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+# Coded by Mine_Bit[BrainHands]
+# brainhands.ru
+# mine_bit@brainhands.ru
+
 from mod import gmailbrute
 
 __author__ = 'Mine_Bit'
@@ -11,6 +15,12 @@ import string
 import mod.popbrute
 import mod.ftpbrute
 import mod.gmailbrute
+import mod.imapbrute
+import mod.mysqlbrute
+import mod.nntpbrute
+import mod.smtpbrute
+import mod.sshbrute
+import mod.telnetbrute
 
 # Список TODO:
 # 1. Добавить пробел после символов ">>" приведя к виду ">> " в функциях ввода информации с консоли
@@ -47,7 +57,6 @@ domain_list = (
 def line_print():
     print('=========================================================================')
 
-
 #Функция выполнения парсинга. Пришлось вывести в функцию, чтобы измерить время выполнения парсинга
 def Search():
     out_file_names = (out_file + '_gmail.txt', out_file + '_yandex.txt', out_file + '_ya.txt', out_file + '_mail.txt',
@@ -81,8 +90,6 @@ def Search():
                     gmail_out_flie.close()
         i += 1
     print('Работа завршена!')
-
-
 #Конец функции поиска
 
 #Функция склейки файлов:
@@ -107,8 +114,6 @@ def Gluing():
                 full_line_counter = full_line_counter + 1
                 counter_lines = counter_lines + 1
         i = i + 1
-
-
 #Конец функции склейки
 
 #Функция для генерации баз паролей:
@@ -157,13 +162,7 @@ def DicGenerate(ids_in, min_symb, max_symb, f_name, pass_amount):
             p_num += 1
     f.close()
     print('Пароли сохранены в ' + f_name + '*_' + str(f_num) + '.txt')
-
-
 #Конец функции генерации словарей
-
-#Функция брутфорса:
-#def Brutforse():
-#Конец функции брутфорса
 
 #Функция для старта парсинга:
 def StartParse():
@@ -248,8 +247,6 @@ def StartParse():
         else:
             print('Ошибка ввода!')
             line_print
-
-
 #Конец функции для старта парсинга
 
 #Функция для старта склейки:
@@ -337,8 +334,6 @@ def StartGluing():
         elif input_int == 777:
             print('Выход из модуля "Склейка"...')
             break
-
-
 #Конец функции для старта склейки
 
 #Функция для старта генератора:
@@ -425,7 +420,7 @@ def StartGenerate():
             print('Ошибка ввода!')
 #Конец функции для старта генератора
 
-
+#Функция для работы с модулем брутфорсов
 def StartBrutforse():
     line_print()
     print('Запущен модуль "Брутфорс" | Версия модуля: 0.2')
@@ -440,8 +435,8 @@ def StartBrutforse():
         print('[4] - MySQL Брутфорс')
         print('[5] - NNTP Брутфорс')
         print('[6] - SMTP Брутфорс')
-        print('[7] - SSH Брутфорс')
-        print('[8] - Telnet Брутфорс')
+        #print('[7] - SSH Брутфорс')
+        #print('[8] - Telnet Брутфорс')
         print('[777] - Выход')
         line_print()
         read_line = int(input('>> '))
@@ -655,23 +650,351 @@ def StartBrutforse():
                     print('Ошибка! Введено неверное значение!')
                     line_print()
         elif read_line == 3:
-            pass
+            server_in = None
+            userlist_in = None
+            wordlist_in = None
+            print('Модуль "IMAP Брутфорс" | Версия модуля: 0.2 ')
+            line_print()
+            print('Меню модуля "IMAP Брутфорс":')
+            line_print()
+            print('[0] - Просмотреть значения')
+            print('[1] - Изменить значения')
+            print('[2] - Запустить модуль')
+            print('[777] - Выйти из модуля')
+            line_print()
+            read_line = int(input('>> '))
+            line_print()
+            if read_line == 0:
+                print('Значения:')
+                print('[0] - Адрес сервера: ',server_in)
+                print('[1] - Файл с логинами: ',userlist_in)
+                print('[2] - Файл с словарем: ',wordlist_in)
+            elif read_line == 1:
+                while True:
+                    print('Изменить значения:')
+                    print('[0] - Адрес сервера | Текущее значение: ',server_in)
+                    print('[1] - Файл с логинами | Текущее значение: ',userlist_in)
+                    print(('[2] - Файл с словарем | Текущее значение: ',wordlist_in))
+                    print('[777] - Выход')
+                    read_line = int(input('>> '))
+                    if read_line == 0:
+                        line_print()
+                        print('Введите новое значение "Адрес сервера":')
+                        server_in = input('>> ')
+                        line_print()
+                    elif read_line == 1:
+                        line_print()
+                        print('Введите новое значение "Файл с логинами":')
+                        userlist_in = input('>> ')
+                        line_print()
+                    elif read_line == 2:
+                        line_print()
+                        print('Введите новое значение "Файл с словарем":')
+                        wordlist_in = input('>> ')
+                        line_print()
+                    elif read_line == 777:
+                        break
+                    else:
+                        line_print()
+                        print('Ошибка! Введено неверное значение!')
+            elif read_line == 2:
+                print('Проверка значений...')
+                if server_in != None | userlist_in != None | wordlist_in != None:
+                    print('Значения не равны нулю...')
+                    print('Запуск модуля...')
+                    start_time = time.time()
+                    imapbrute.Start(server_in,userlist_in,wordlist_in)
+                    finish_time = time.time()
+                    line_print()
+                    print('Работа модуля "IMAP Брутфорс" завершена!')
+                    print('Время выполнения: ', str(finish_time - start_time), ' сек')
+                    line_print()
+                else:
+                    line_print()
+                    print('Значения пусты!')
+                    line_print()
+            elif read_line == 777:
+                print('Выход из модуля "IMAP Брутфорс"...')
+                line_print()
+                break
+            else:
+                print('Ошибка! Введено неверное значение!')
+                line_print()
+        elif read_line == 4:
+            server_in = None
+            port_in = None
+            database_in = None
+            userlist_in = None
+            wordlist_in = None
+            print('Модуль "MySQL Брутфорс" | Версия модуля: 0.2')
+            line_print()
+            print('Меню модуля "MySQL Брутфорс":')
+            line_print()
+            print('[0] - Просмотреть значения')
+            print('[1] - Изменить значения')
+            print('[2] - Запустить модуль')
+            print('[777] - Выйти из модуля')
+            line_print()
+            read_line = int(input('>> '))
+            line_print()
+            if read_line == 0:
+                print('Значения:')
+                print('[0] - Адрес сервера: ',server_in)
+                print('[1] - Порт сервера: ',port_in)
+                print('[2] - Имя базы данных: ',database_in)
+                print('[3] - Файл с логинами: ',userlist_in)
+                print('[4] - Файл с словарем: ',wordlist_in)
+            elif read_line == 1:
+                while True:
+                    print('Изменить значения:')
+                    print('[0] - Адрес сервера | Текущее значение: ',server_in)
+                    print('[1] - Порт сервера | Текущее значение: ',port_in)
+                    print('[2] - Имя базы данных | Текущее значение: ',database_in)
+                    print('[3] - Файл с логинами | Текущее значение: ',userlist_in)
+                    print('[4] - Файл с словарем | Текущее значение: ',wordlist_in)
+                    print('[777] - Выход')
+                    line_print()
+                    read_line = int(input('>> '))
+                    line_print()
+                    if read_line == 0:
+                        line_print()
+                        print('Введите новое значение "Адрес сервера":')
+                        server_in = input('>> ')
+                        line_print()
+                    elif read_line == 1:
+                        line_print()
+                        print('Введите новое значение "Порт сервера":')
+                        port_in = input('>> ')
+                        line_print()
+                    elif read_line == 2:
+                        line_print()
+                        print('Введите новое значение "Имя базы данных":')
+                        database_in = input('>> ')
+                        line_print()
+                    elif read_line == 3:
+                        line_print()
+                        print('Введите новое значение "Файл с логинами":')
+                        userlist_in = input('>> ')
+                        line_print()
+                    elif read_line == 4:
+                        line_print()
+                        print('Введите новое значение "Файл с словарем":')
+                        line_print()
+                    elif read_line == 777:
+                        break
+                    else:
+                        line_print()
+                        print('Ошибка! Введено неверное значение!')
+            elif read_line == 2:
+                print('Проверка значений...')
+                if server_in != None | port_in != None | database_in != None | userlist_in != None | wordlist_in != None:
+                    print('Значения не равны нулю...')
+                    print('Запуск модуля...')
+                    start_time = time.time()
+                    mysqlbrute.Start(server_in,port_in,database_in,userlist_in,wordlist_in)
+                    finish_time = time.time()
+                    print('Работа модуля "MySQL Брутфорс" завершена!')
+                    print('Время выполнения: ',str(finish_time-start_time),' сек')
+                    line_print()
+                else:
+                    line_print()
+                    print('Значения пусты!')
+                    line_print()
+            elif read_line == 777:
+                print('Выход из модуля "MySQL Брутфорс"...')
+                line_print()
+                break
+            else:
+                print('Ошибка! Введено неверное значение!')
+                line_print()
+        elif read_line == 5:
+            server_in = None
+            port_in = None
+            userlist_in = None
+            wordlist_in = None
+            print('Модуль "NNTP Брутфорс" | Версия модуля: 0.2')
+            line_print()
+            print('Меню модуля "NNTP Брутфорс":')
+            line_print()
+            print('[0] - Просмотреть значения')
+            print('[1] - Изменить значения')
+            print('[2] - Запустить модуль')
+            print('[777] - Выйти из модуля')
+            line_print()
+            read_line = int(input('>> '))
+            line_print()
+            if read_line == 0:
+                print('Значения:')
+                print('[0] - Адрес сервера: ',server_in)
+                print('[1] - Порт сервера: ',port_in)
+                print('[2] - Файл с логинами: ',userlist_in)
+                print('[3] - Файл с словарем: ',wordlist_in)
+            elif read_line == 1:
+                while True:
+                    print('Изменить значения:')
+                    print('[0] - Адрес сервера | Текущее значение: ',server_in)
+                    print('[1] - Порт сервера | Текущее значение: ',port_in)
+                    print('[2] - Файл с логинами | Текущее значение: ',userlist_in)
+                    print('[3] - Файл с словарем | Текущее значение: ',wordlist_in)
+                    print('[777] - Выход')
+                    line_print()
+                    read_line = int(input('>> '))
+                    line_print()
+                    if read_line == 0:
+                        line_print()
+                        print('Введите новое значение "Адрес сервера":')
+                        server_in = input('>> ')
+                        line_print()
+                    elif read_line == 1:
+                        line_print()
+                        print('Введите новое значение "Порт сервера":')
+                        port_in = input('>> ')
+                        line_print()
+                    elif read_line == 2:
+                        line_print()
+                        print('Введите новое значение "Файл с логинами":')
+                        userlist_in = input('>> ')
+                        line_print()
+                    elif read_line == 3:
+                        line_print()
+                        print('Введите новое значение "Файл с словарем":')
+                        line_print()
+                    elif read_line == 777:
+                        break
+                    else:
+                        line_print()
+                        print('Ошибка! Введено неверное значение!')
+            elif read_line == 2:
+                print('Проверка значений...')
+                if server_in != None | port_in != None | userlist_in != None | wordlist_in != None:
+                    print('Значения не равны нулю...')
+                    print('Запуск модуля...')
+                    start_time = time.time()
+                    nntpbrute.Start(server_in,port_in,userlist_in,wordlist_in)
+                    finish_time = time.time()
+                    print('Работа модуля "NNTP Брутфорс" завершена!')
+                    print('Время выполнения: ',str(finish_time-start_time),' сек')
+                    line_print()
+                else:
+                    line_print()
+                    print('Значения пусты!')
+                    line_print()
+            elif read_line == 777:
+                print('Выход из модуля "NNTP Брутфорс"...')
+                line_print()
+                break
+            else:
+                print('Ошибка! Введено неверное значение!')
+                line_print()
+        elif read_line == 6:
+            server_in = None
+            userlist_in = None
+            wordlist_in = None
+            print('Модуль "SMTP Брутфорс" | Версия модуля: 0.2 ')
+            line_print()
+            print('Меню модуля "SMTP Брутфорс":')
+            line_print()
+            print('[0] - Просмотреть значения')
+            print('[1] - Изменить значения')
+            print('[2] - Запустить модуль')
+            print('[777] - Выйти из модуля')
+            line_print()
+            read_line = int(input('>> '))
+            line_print()
+            if read_line == 0:
+                print('Значения:')
+                print('[0] - Адрес сервера: ',server_in)
+                print('[1] - Файл с логинами: ',userlist_in)
+                print('[2] - Файл с словарем: ',wordlist_in)
+            elif read_line == 1:
+                while True:
+                    print('Изменить значения:')
+                    print('[0] - Адрес сервера | Текущее значение: ',server_in)
+                    print('[1] - Файл с логинами | Текущее значение: ',userlist_in)
+                    print(('[2] - Файл с словарем | Текущее значение: ',wordlist_in))
+                    print('[777] - Выход')
+                    read_line = int(input('>> '))
+                    if read_line == 0:
+                        line_print()
+                        print('Введите новое значение "Адрес сервера":')
+                        server_in = input('>> ')
+                        line_print()
+                    elif read_line == 1:
+                        line_print()
+                        print('Введите новое значение "Файл с логинами":')
+                        userlist_in = input('>> ')
+                        line_print()
+                    elif read_line == 2:
+                        line_print()
+                        print('Введите новое значение "Файл с словарем":')
+                        wordlist_in = input('>> ')
+                        line_print()
+                    elif read_line == 777:
+                        break
+                    else:
+                        line_print()
+                        print('Ошибка! Введено неверное значение!')
+            elif read_line == 2:
+                print('Проверка значений...')
+                if server_in != None | userlist_in != None | wordlist_in != None:
+                    print('Значения не равны нулю...')
+                    print('Запуск модуля...')
+                    start_time = time.time()
+                    smtpbrute.Start(server_in,userlist_in,wordlist_in)
+                    finish_time = time.time()
+                    line_print()
+                    print('Работа модуля "SMTP Брутфорс" завершена!')
+                    print('Время выполнения: ', str(finish_time - start_time), ' сек')
+                    line_print()
+                else:
+                    line_print()
+                    print('Значения пусты!')
+                    line_print()
+            elif read_line == 777:
+                print('Выход из модуля "SMTP Брутфорс"...')
+                line_print()
+                break
+            else:
+                print('Ошибка! Введено неверное значение!')
+                line_print()
+        elif read_line == 777:
+            line_print()
+            print('Выход из модуля "Брутфорс"...')
+            break
+        else:
+            line_print()
+            print('Ошибка! Введено неверное значение!')
+#Конец функции для работы с модулем брутфорсов
 
 def StartCheck():
-    pass
+    print('Данная функция будет добавлена в следующих версиях')
+    line_print()
 
-
+#Функция для вывода помощи по программе
 def Help():
-    pass
+    print('Помощь')
+    line_print()
+    print('BrainBruteKit - набор утилит для проведения атак типа bruteforse.\n'
+          'Для выбора пункта меню, вводите номер этого пункта.\n'
+          'Если вы нашли баг, или знаете, как улучшить эту программу,\n'
+          'пожалуйста, напишите мне на почту mine_bit@brainhands.ru')
+    line_print()
+#Конец функции для вывода помощи по программе
 
-
+#Функция для вывода информации о программе
 def Info():
-    pass
+    print('BrainBruteKit | Version: 0.1')
+    line_print()
+    print('Coded by Mine_Bit[BrainHands].')
+    print('brainhands.ru')
+    print('mine_bit@brainhands.ru')
+    print('Благодарность: d3hydr8')
+#Конец функции для вывода иформации о программе
 
-
+#Функция для выхода из программы:
 def Exit():
     sys.exit(1)
-
+#Конец функции для выхода из программы
 
 #Начало работы скрипта:
 print()
