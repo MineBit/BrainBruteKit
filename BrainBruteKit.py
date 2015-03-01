@@ -3,7 +3,6 @@
 # brainhands.ru
 # mine_bit@brainhands.ru
 
-from mod import gmailbrute
 
 __author__ = 'Mine_Bit'
 
@@ -12,18 +11,17 @@ import sys
 import time
 import string
 
-import mod.popbrute
-import mod.ftpbrute
-import mod.gmailbrute
-import mod.imapbrute
-import mod.mysqlbrute
-import mod.nntpbrute
-import mod.smtpbrute
-import mod.sshbrute
-import mod.telnetbrute
+from mod import popbrute
+from mod import ftpbrute
+from mod import gmailbrute
+from mod import imapbrute
+from mod import mysqlbrute
+from mod import nntpbrute
+from mod import smtpbrute
+#import mod.sshbrute
+#import mod.telnetbrute
 
-# Список TODO:
-# 1. Добавить пробел после символов ">>" приведя к виду ">> " в функциях ввода информации с консоли
+
 
 # Памятка  по значениям индексов:
 # [0] - Gmail (@gmail.com)
@@ -47,6 +45,7 @@ import mod.telnetbrute
 # Создание переменных;
 
 
+
 files_created = [False, False, False, False, False, False, False, False, False, False, False, False, False, False,
                  False, False, False]
 domain_list = (
@@ -58,7 +57,7 @@ def line_print():
     print('=========================================================================')
 
 #Функция выполнения парсинга. Пришлось вывести в функцию, чтобы измерить время выполнения парсинга
-def Search():
+def Search(out_file,len_of_f_list,f_list):
     out_file_names = (out_file + '_gmail.txt', out_file + '_yandex.txt', out_file + '_ya.txt', out_file + '_mail.txt',
                       out_file + '_inbox.txt', out_file + '_list.txt', out_file + '_bk.txt', out_file + '_lenta.txt',
                       out_file + '_rambler.txt', out_file + '_autorambler.txt', out_file + '_myrambler.txt',
@@ -93,7 +92,7 @@ def Search():
 #Конец функции поиска
 
 #Функция склейки файлов:
-def Gluing():
+def Gluing(files_counter,array_file_names,output_file_name):
     i = 0
     full_line_counter = 0
     while i < files_counter:
@@ -101,6 +100,7 @@ def Gluing():
             f = open(array_file_names[i])
             f_list = f.readlines()
             len_of_f_list = len(f_list)
+            print('1')
         except IOError:
             print("Файл не найден!")
         if len_of_f_list == 0:
@@ -166,7 +166,6 @@ def DicGenerate(ids_in, min_symb, max_symb, f_name, pass_amount):
 
 #Функция для старта парсинга:
 def StartParse():
-    line_print()
     print('Запушен модуль "Парсер" | Версия модуля: 0.4')
     line_print()
     file_to_parse = None
@@ -223,7 +222,7 @@ def StartParse():
             if len_of_f_list == 0:
                 print('Файл для чтения пуст!')
             else:
-                file_size = os.path.getsize(file_name)
+                file_size = os.path.getsize(file_to_parse)
                 line_print()
                 print('Информация о входном файле:')
                 print('Имя файла: ', file_to_parse)
@@ -235,7 +234,7 @@ def StartParse():
                 line_print()
                 print('Все значения проверены. Парсинг запущен!')
                 start_time = time.time()
-                Search()
+                Search(out_file,len_of_f_list,f_list)
                 finish_time = time.time()
                 line_print()
                 print('Парсинг завершен!')
@@ -263,7 +262,6 @@ def StartGluing():
         print('[2] - Запустить выполнение модуля')
         print('[777] - Выйти из модуля')
         line_print()
-        del input_int
         input_int = int(input('>>'))
         line_print()
         if input_int == 0:
@@ -325,7 +323,7 @@ def StartGluing():
         elif input_int == 2:
             print('Начинаем склейку...')
             start_time = time.time()
-            Gluing()
+            Gluing(files_counter,array_file_names,output_file_name)
             finish_time = time.time()
             line_print()
             print('Работа модуля "Склейка" завершен!')
@@ -442,10 +440,10 @@ def StartBrutforse():
         read_line = int(input('>> '))
         line_print()
         if read_line == 0:
+            server_in = None
+            userlist_in = None
+            wordlist_in = None
             while True:
-                server_in = None
-                userlist_in = None
-                wordlist_in = None
                 print('Модуль "POP Брутфорс" | Версия модуля: 0.2 ')
                 line_print()
                 print('Меню модуля "POP Брутфорс":')
@@ -467,7 +465,7 @@ def StartBrutforse():
                         print('Изменить значения:')
                         print('[0] - Адрес сервера | Текущее значение: ',server_in)
                         print('[1] - Файл с логинами | Текущее значение: ',userlist_in)
-                        print(('[2] - Файл с словарем | Текущее значение: ',wordlist_in))
+                        print('[2] - Файл с словарем | Текущее значение: ',wordlist_in)
                         print('[777] - Выход')
                         read_line = int(input('>> '))
                         if read_line == 0:
@@ -492,7 +490,7 @@ def StartBrutforse():
                             print('Ошибка! Введено неверное значение!')
                 elif read_line == 2:
                     print('Проверка значений...')
-                    if server_in != None | userlist_in != None | wordlist_in != None:
+                    if server_in != None or userlist_in != None or wordlist_in != None:
                         print('Значения не равны нулю...')
                         print('Запуск модуля...')
                         start_time = time.time()
@@ -585,9 +583,9 @@ def StartBrutforse():
                 print('Ошибка! Введено неверное значение!')
                 line_print()
         elif read_line == 2:
+            user_in = None
+            wordlist_in = None
             while True:
-                user_in = None
-                wordlist_in = None
                 print('Модуль "Gmail Брутфорс" | Версия модуля: 0.2')
                 line_print()
                 print('Меню модуля "Gmail Брутфорс":')
@@ -628,7 +626,7 @@ def StartBrutforse():
                             print('Ошибка! Введено неверное значение!')
                 elif read_line == 2:
                     print('Проверка значений...')
-                    if user_in != None | wordlist_in != None:
+                    if user_in != None or wordlist_in != None:
                         print('Значения на равны нулю...')
                         print('Запуск модуля...')
                         start_time = time.time()
@@ -787,7 +785,7 @@ def StartBrutforse():
                         print('Ошибка! Введено неверное значение!')
             elif read_line == 2:
                 print('Проверка значений...')
-                if server_in != None | port_in != None | database_in != None | userlist_in != None | wordlist_in != None:
+                if server_in != None or port_in != None or database_in != None or userlist_in != None or wordlist_in != None:
                     print('Значения не равны нулю...')
                     print('Запуск модуля...')
                     start_time = time.time()
@@ -866,7 +864,7 @@ def StartBrutforse():
                         print('Ошибка! Введено неверное значение!')
             elif read_line == 2:
                 print('Проверка значений...')
-                if server_in != None | port_in != None | userlist_in != None | wordlist_in != None:
+                if server_in != None or port_in != None or userlist_in != None or wordlist_in != None:
                     print('Значения не равны нулю...')
                     print('Запуск модуля...')
                     start_time = time.time()
@@ -936,7 +934,7 @@ def StartBrutforse():
                         print('Ошибка! Введено неверное значение!')
             elif read_line == 2:
                 print('Проверка значений...')
-                if server_in != None | userlist_in != None | wordlist_in != None:
+                if server_in != None or userlist_in != None or wordlist_in != None:
                     print('Значения не равны нулю...')
                     print('Запуск модуля...')
                     start_time = time.time()
@@ -983,65 +981,53 @@ def Help():
 
 #Функция для вывода информации о программе
 def Info():
-    print('BrainBruteKit | Version: 0.1')
+    print('BrainBruteKit | Version: 0.1.1')
     line_print()
-    print('Coded by Mine_Bit[BrainHands].')
+    print('Coded by Mine_Bit[BrainHands]')
     print('brainhands.ru')
     print('mine_bit@brainhands.ru')
     print('Благодарность: d3hydr8')
 #Конец функции для вывода иформации о программе
 
-#Функция для выхода из программы:
-def Exit():
-    sys.exit(1)
-#Конец функции для выхода из программы
-
 #Начало работы скрипта:
 print()
 line_print()
-print('BrainBruteKit | 0.1 | By Mine_Bit')
+print('BrainBruteKit | 0.1.1 | By Mine_Bit')
 print('Coded By Mine_Bit [Brain Hands]')
 print('Официальный сайт: brainhands.ru')
-line_print()
 while True:
+    line_print()
     print('Главное меню:')
     line_print()
-    while True:
-        print('Выберите функцию:')
-        print('[0] - Парсер')
-        print('[1] - Склейщик баз')
-        print('[2] - Генератор словарей')
-        print('[3] - Брутфорс')
-        print('[4] - Чеккер')
-        print('[99] - Помощь')
-        print('[100] - Информация')
-        print('[777] - Выход')
-        line_print()
-        input_int = int(input('>>'))
-        line_print()
-        if input_int == 0:
-            StartParse()
-            break
-        elif input_int == 1:
-            StartGluing()
-            break
-        elif input_int == 2:
-            StartGenerate()
-            break
-        elif input_int == 3:
-            StartBrutforse()
-            break
-        elif input_int == 4:
-            StartCheck()
-            break
-        elif input_int == 99:
-            Help()
-            break
-        elif input_int == 100:
-            Info()
-            break
-        elif input_int == 777:
-            Exit()
-        else:
-            print('Введено неверное значение!')
-            #Конец работы скрипта
+    print('Выберите функцию:')
+    print('[0] - Парсер')
+    print('[1] - Склейщик баз')
+    print('[2] - Генератор словарей')
+    print('[3] - Брутфорс')
+    print('[4] - Чеккер')
+    print('[99] - Помощь')
+    print('[100] - Информация')
+    print('[777] - Выход')
+    line_print()
+    input_int = int(input('>>'))
+    line_print()
+    if input_int == 0:
+        StartParse()
+    elif input_int == 1:
+        StartGluing()
+    elif input_int == 2:
+        StartGenerate()
+    elif input_int == 3:
+        StartBrutforse()
+    elif input_int == 4:
+        StartCheck()
+    elif input_int == 99:
+        Help()
+    elif input_int == 100:
+        Info()
+    elif input_int == 777:
+        sys.exit(1)
+    else:
+        print('Введено неверное значение!')
+    #Конец работы скрипта
+
